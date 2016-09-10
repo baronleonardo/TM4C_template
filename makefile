@@ -3,6 +3,10 @@ TARGET=$(notdir $(shell pwd))
 C_FILES=$(wildcard src/*.c) ./startup.c
 OBJ_FILES=$(addprefix obj/,$(notdir $(C_FILES:.c=.o)))
 
+FLASH=/usr/bin/lm4flash
+OPENOCD=/usr/bin/openocd
+GDB=/usr/bin/arm-none-eabi-gdb
+
 CC=/usr/bin/arm-none-eabi-gcc
 OBJCOPY=/usr/bin/arm-none-eabi-objcopy
 CCFLAGS=-mcpu=cortex-m4 \
@@ -43,9 +47,9 @@ LFLAGS=-march=armv7e-m \
 -Wl,--end-group
 
 all: $(OBJ_FILES)
-	$(CC) $(LFLAGS) -o"obj/$(TARGET).elf" $^
+	$(CC) $(LFLAGS) -o$(TARGET).elf $^
 	# Generate binary file from elf file
-	$(OBJCOPY) -O binary "obj/$(TARGET).elf" $(TARGET).bin
+	$(OBJCOPY) -O binary $(TARGET).elf $(TARGET).bin
 
 obj/%.o: src/%.c
 	$(CC) $(CCFLAGS) -o $@ $<
@@ -54,7 +58,16 @@ obj/startup.o: startup.c
 	$(CC) $(CCFLAGS) -o $@ $<
 
 upload:
-	lm4flash $(TARGET).bin
+	$(FLASH) $(TARGET).bin
+
+debug: all
+	# launch openocd
+	$(OPENOCD) --file /usr/share/openocd/scripts/board/ek-tm4c123gxl.cfg &>2 /dev/null &
+	sleep 1
+	# launch gdb
+	$(GDB) --tui --init-command=debug_helper_files/pre --command=debug_helper_files/cmd $(TARGET).elf
+	# kill openocd after quiting from gdb
+	killall openocd
 
 clean:
-	rm $(TARGET).bin obj/*
+	rm $(TARGET).* obj/*
