@@ -1,0 +1,25 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "0.1.0",
+    "command": "sh",
+    "isShellCommand": true,
+    "args": ["-c"],
+    "showOutput": "always",
+    "echoCommand": true,
+    "suppressTaskName": true,
+    "tasks": [
+        {
+            "taskName": "make",
+            "args": ["make"]
+        },
+        {
+            "taskName": "upload",
+            "args": ["make upload"]
+        },
+        {
+            "taskName": "openocd",
+            "args": ["/usr/bin/openocd --file /usr/share/openocd/scripts/board/ek-tm4c123gxl.cfg"]
+        }
+    ]
+}
