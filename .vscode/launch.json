@@ -5,8 +5,8 @@
             "name": "C++ Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceRoot}/obj/TM4C_template.elf",
-            "args": ["--init-command=/tmp/file", "--command=/tmp/file2"],
+            "program": "${workspaceRoot}/Output.elf",
+            "args": ["--init-command=${workspaceRoot}/debug_helper_files/pre", "--command=${workspaceRoot}/debug_helper_files/cmd"],
             "stopAtEntry": false,
             "cwd": "${workspaceRoot}",
             "environment": [],
@@ -22,22 +22,22 @@
             "windows": {
                 "MIMode": "gdb"
             }
-        },
-        {
-            "name": "C++ Attach",
-            "type": "cppdbg",
-            "request": "attach",
-            "program": "enter program name, for example ${workspaceRoot}/a.out",
-            "processId": "${command.pickProcess}",
-            "linux": {
-                "MIMode": "gdb"
-            },
-            "osx": {
-                "MIMode": "lldb"
-            },
-            "windows": {
-                "MIMode": "gdb"
-            }
         }
+        // {
+        //     "name": "C++ Attach",
+        //     "type": "cppdbg",
+        //     "request": "attach",
+        //     "program": "enter program name, for example ${workspaceRoot}/a.out",
+        //     "processId": "${command.pickProcess}",
+        //     "linux": {
+        //         "MIMode": "gdb"
+        //     },
+        //     "osx": {
+        //         "MIMode": "lldb"
+        //     },
+        //     "windows": {
+        //         "MIMode": "gdb"
+        //     }
+        // }
     ]
 }

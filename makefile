@@ -1,4 +1,5 @@
-TARGET="$(notdir $(shell pwd))"
+# TARGET="$(shell basename $(CURDIR))"
+TARGET=Output
 
 C_FILES=$(wildcard src/*.c) ./startup.c
 OBJ_FILES=$(addprefix obj/,$(notdir $(C_FILES:.c=.o)))
