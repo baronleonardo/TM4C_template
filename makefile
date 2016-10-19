@@ -41,10 +41,12 @@ LFLAGS=-march=armv7e-m \
 -gdwarf-3 \
 -gstrict-dwarf \
 -Wall  \
+--specs=rdimon.specs \
 -Wl,-T"./tm4c123gh6pm.lds" \
 -Wl,--start-group -l"gcc" \
 -l"nosys" \
 -l"c" \
+-lrdimon \
 -Wl,--end-group
 
 all: $(OBJ_FILES)
